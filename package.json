@@ -1,0 +1,15 @@
+{
+  "name": "ffmpeg-word-captions",
+  "version": "0.1.0",
+  "description": "Word-timed captions for ffmpeg: karaoke, highlight, reveal and pop styles as an ASS file, from a Whisper, WhisperX, whisper.cpp, Deepgram, AssemblyAI or ElevenLabs transcript. Burn them in with one command.",
+  "license": "MIT",
+  "author": "Coslynx (https://coslynx.com)",
+  "homepage": "https://github.com/CosLynxAI/ffmpeg-word-captions",
+  "repository": { "type": "git", "url": "git+https://github.com/CosLynxAI/ffmpeg-word-captions.git" },
+  "bin": { "ffmpeg-word-captions": "bin/cli.js" },
+  "main": "src/index.js",
+  "files": ["bin", "src"],
+  "engines": { "node": ">=18.17" },
+  "scripts": { "test": "node --test" },
+  "keywords": ["ffmpeg", "captions", "subtitles", "karaoke", "ass", "libass", "whisper", "word-timestamps", "tiktok-captions", "reels", "shorts"]
+}
