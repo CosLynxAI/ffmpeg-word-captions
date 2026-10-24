@@ -66,8 +66,8 @@ ffmpeg-word-captions <transcript.json> [-o captions.ass] [--style karaoke] [--vi
 | `--video` | | the video the captions are for: its size is read with ffprobe (rotation included), so type and margins are in its pixels |
 | `--frame` | `1080x1920` | the size, `WxH`, when there is no `--video` |
 | `--burn` | | write this video with the captions burned in (needs `--video`) |
-| `--font` | `Arial` | the font family |
-| `--fonts-dir` | | a folder of `.ttf`/`.otf` files for `--burn`, so libass finds `--font` without installing it |
+| `--font` | `Anton` | the font family. Anton (SIL OFL 1.1) ships in `fonts/`, so `--burn` finds it with nothing installed |
+| `--fonts-dir` | the shipped `fonts/` | a folder of `.ttf`/`.otf` files for `--burn`, so libass finds `--font` without installing it |
 | `--font-size` | 7 % of the short side (pop: 11 %) | in pixels |
 | `--color` / `--highlight` / `--outline` | `#ffffff` / `#ffd400` / `#000000` | `#rrggbb`, or `#rrggbbaa` with opacity |
 | `--box` | off | an opaque box behind the line instead of an outline |
@@ -97,7 +97,7 @@ YCbCr Matrix: None
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Word,Arial,76,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,6,3,2,86,86,230,1
+Style: Word,Anton,76,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,6,3,2,86,86,230,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

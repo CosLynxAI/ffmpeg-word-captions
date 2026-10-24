@@ -6,6 +6,9 @@ const { spawnSync } = require("child_process");
 const { readWords } = require("../src/transcript");
 const { buildAss, STYLES } = require("../src/ass");
 
+/** The fonts shipped with the tool (Anton, the default face), for --burn when no --fonts-dir is given. */
+const FONTS = path.join(__dirname, "..", "fonts");
+
 const HELP = `ffmpeg-word-captions: word-timed captions (ASS karaoke) from a transcript, for ffmpeg to burn in
 
   ffmpeg-word-captions <transcript.json> [-o captions.ass] [--style karaoke] [--video in.mp4 [--burn out.mp4]]
@@ -17,7 +20,7 @@ ElevenLabs Scribe, or a plain [{ "word", "start", "end" }] list in seconds.
   --video        the video the captions are for: sizes are read from it (else --frame, default 1080x1920)
   --frame        WxH when there is no --video
   --burn         write the video with the captions burned in (needs --video and ffmpeg)
-  --font         font family (default Arial)        --fonts-dir   a folder of .ttf/.otf files for --burn
+  --font         font family (default Anton, shipped) --fonts-dir  a folder of .ttf/.otf files for --burn
   --font-size    px (default 7% of the short side; pop 11%)
   --color        #rrggbb words (default #ffffff)    --highlight   #rrggbb said word (default #ffd400)
   --outline      #rrggbb outline (default #000000)  --box         an opaque box instead of an outline
@@ -66,7 +69,7 @@ function main(argv) {
     return;
   }
   const cwd = path.dirname(out);
-  const vf = `ass=filename=${filterPath(out, cwd)}${o["fonts-dir"] ? `:fontsdir=${filterPath(path.resolve(o["fonts-dir"]), cwd)}` : ""}`;
+  const vf = `ass=filename=${filterPath(out, cwd)}:fontsdir=${filterPath(o["fonts-dir"] ? path.resolve(o["fonts-dir"]) : FONTS, cwd)}`;
   const r = spawnSync(process.env.FFMPEG_PATH || "ffmpeg", ["-v", "error", "-y", "-i", path.resolve(o.video), "-vf", vf, "-c:a", "copy", path.resolve(o.burn)], { cwd, stdio: "inherit", windowsHide: true });
   if (r.error) throw new Error("ffmpeg was not found: install it (https://ffmpeg.org/download.html)");
   if (r.status !== 0) throw new Error("ffmpeg could not burn the captions in");

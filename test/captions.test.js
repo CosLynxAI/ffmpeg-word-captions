@@ -73,7 +73,7 @@ test("highlight: one event a word, the said word coloured and larger", () => {
 
 test("reveal hides unsaid words; pop shows one word at a time in the middle", () => {
   const reveal = buildAss(seq("one two"), { style: "reveal" });
-  assert.match(reveal, /Style: Word,Arial,\d+,&H00FFFFFF,&HFF000000,/);
+  assert.match(reveal, /Style: Word,Anton,\d+,&H00FFFFFF,&HFF000000,&H00000000,&H80000000,0,/);
   assert.match(reveal, /\{\\ko35\}one \{\\ko30\}two/);
   const pop = buildAss(seq("one two"), { style: "pop" });
   assert.equal(pop.split("\n").filter((l) => l.startsWith("Dialogue:")).length, 2);

@@ -58,12 +58,14 @@ const stamp = (t) => {
   const cs = Math.max(0, Math.round(t * 100));
   return `${Math.floor(cs / 360000)}:${String(Math.floor((cs % 360000) / 6000)).padStart(2, "0")}:${String(Math.floor((cs % 6000) / 100)).padStart(2, "0")}.${String(cs % 100).padStart(2, "0")}`;
 };
+/** The face captions default to: Anton (SIL OFL 1.1), shipped in fonts/ so --burn finds it without installing it. */
+const DEFAULT_FONT = "Anton";
 // (braces and backslashes would be read as override tags)
 const clean = (w) => String(w).replace(/[{}\\]/g, "");
 
 /**
  * The ASS file for `words` ([{ w, start, end }], seconds). Options: style (STYLES), width/height (the video's, so
- * sizes and margins are in its pixels), font, size (px; default 7% of the shorter side, 1.6x that for pop), color,
+ * sizes and margins are in its pixels), font (default Anton), size (px; default 7% of the shorter side, 1.6x that for pop), color,
  * highlight, outline (colour), outlineWidth, box (an opaque box behind the line instead of an outline), position
  * (bottom, middle, top), uppercase, maxWords, maxChars, linger (s a line stays after its last word).
  */
@@ -84,7 +86,7 @@ function buildAss(words, o = {}) {
     "[Script Info]", "; Written by ffmpeg-word-captions", "ScriptType: v4.00+", `PlayResX: ${W}`, `PlayResY: ${H}`, "WrapStyle: 2", "ScaledBorderAndShadow: yes", "YCbCr Matrix: None", "",
     "[V4+ Styles]",
     "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding",
-    `Style: Word,${o.font || "Arial"},${size},${primary},${secondary},${line},${o.box ? line : "&H80000000"},-1,0,0,0,100,100,0,0,${o.box ? 3 : 1},${o.box ? Math.round(size * 0.18) : ow},${o.box || style === "reveal" ? 0 : Math.max(1, Math.round(size * 0.04))},${align},${Math.round(W * 0.08)},${Math.round(W * 0.08)},${Math.round(H * (align === 5 ? 0 : 0.12))},1`,
+    `Style: Word,${o.font || DEFAULT_FONT},${size},${primary},${secondary},${line},${o.box ? line : "&H80000000"},${o.font ? -1 : 0},0,0,0,100,100,0,0,${o.box ? 3 : 1},${o.box ? Math.round(size * 0.18) : ow},${o.box || style === "reveal" ? 0 : Math.max(1, Math.round(size * 0.04))},${align},${Math.round(W * 0.08)},${Math.round(W * 0.08)},${Math.round(H * (align === 5 ? 0 : 0.12))},1`,
     "", "[Events]", "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
   ];
   const events = [];

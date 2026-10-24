@@ -8,7 +8,7 @@
   "repository": { "type": "git", "url": "git+https://github.com/CosLynxAI/ffmpeg-word-captions.git" },
   "bin": { "ffmpeg-word-captions": "bin/cli.js" },
   "main": "src/index.js",
-  "files": ["bin", "src"],
+  "files": ["bin", "src", "fonts"],
   "engines": { "node": ">=18.17" },
   "scripts": { "test": "node --test" },
   "keywords": ["ffmpeg", "captions", "subtitles", "karaoke", "ass", "libass", "whisper", "word-timestamps", "tiktok-captions", "reels", "shorts"]
